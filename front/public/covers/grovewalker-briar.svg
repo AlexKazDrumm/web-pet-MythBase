@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 340" width="400" height="340" role="img" aria-label="Grovewalker Briar">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="hsl(128 45% 20%)"/>
+      <stop offset="1" stop-color="hsl(168 45% 12%)"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="340" fill="url(#g)"/>
+  <rect width="400" height="340" fill="none" stroke="hsl(128 40% 40%)" stroke-width="2"/>
+  <path d="M200 80 C 130 130, 130 220, 200 270 C 270 220, 270 130, 200 80 Z" fill="hsl(128 70% 78%)" opacity="0.85"/><line x1="200" y1="90" x2="200" y2="260" stroke="hsl(128 40% 40%)" stroke-width="6"/>
+  <text x="200" y="316" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="hsl(128 30% 85%)">Grovewalker Briar</text>
+</svg>

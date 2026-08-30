@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 340" width="400" height="340" role="img" aria-label="Нет обложки">
+  <rect width="400" height="340" fill="#1e222b"/>
+  <rect x="1" y="1" width="398" height="338" fill="none" stroke="#3a4150" stroke-width="2"/>
+  <path d="M120 210 l50 -60 l40 45 l30 -35 l40 50 Z" fill="#3a4150"/>
+  <circle cx="150" cy="120" r="18" fill="#3a4150"/>
+  <text x="200" y="300" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#6c7688">MythBase</text>
+</svg>

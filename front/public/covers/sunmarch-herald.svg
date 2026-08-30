@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 340" width="400" height="340" role="img" aria-label="Sunmarch Herald">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="hsl(40 45% 20%)"/>
+      <stop offset="1" stop-color="hsl(80 45% 12%)"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="340" fill="url(#g)"/>
+  <rect width="400" height="340" fill="none" stroke="hsl(40 40% 40%)" stroke-width="2"/>
+  <circle cx="200" cy="170" r="50" fill="hsl(40 70% 78%)"/><g stroke="hsl(40 70% 78%)" stroke-width="8" stroke-linecap="round"><line x1="270.0" y1="170.0" x2="295.0" y2="170.0"/><line x1="260.6" y1="205.0" x2="282.3" y2="217.5"/><line x1="235.0" y1="230.6" x2="247.5" y2="252.3"/><line x1="200.0" y1="240.0" x2="200.0" y2="265.0"/><line x1="165.0" y1="230.6" x2="152.5" y2="252.3"/><line x1="139.4" y1="205.0" x2="117.7" y2="217.5"/><line x1="130.0" y1="170.0" x2="105.0" y2="170.0"/><line x1="139.4" y1="135.0" x2="117.7" y2="122.5"/><line x1="165.0" y1="109.4" x2="152.5" y2="87.7"/><line x1="200.0" y1="100.0" x2="200.0" y2="75.0"/><line x1="235.0" y1="109.4" x2="247.5" y2="87.7"/><line x1="260.6" y1="135.0" x2="282.3" y2="122.5"/></g>
+  <text x="200" y="316" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="hsl(40 30% 85%)">Sunmarch Herald</text>
+</svg>
