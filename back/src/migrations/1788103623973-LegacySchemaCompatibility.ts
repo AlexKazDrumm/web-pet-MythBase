@@ -87,5 +87,7 @@ export class LegacySchemaCompatibility1788103623973
     `);
   }
 
-  public async down(): Promise<void> {}
+  public async down(): Promise<void> {
+    // Compatibility repairs cannot be reversed without risking restored data.
+  }
 }

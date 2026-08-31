@@ -18,6 +18,11 @@ const idListQuery = z
 
 const trimmed = (max: number) => z.string().trim().min(1).max(max);
 
+const coverFileName = trimmed(256).regex(
+  /^[a-zA-Z0-9][a-zA-Z0-9._-]*\.(?:svg|png|jpe?g|webp)$/i,
+  "coverLink must be an image file name without a path",
+);
+
 export const idParamSchema = z.object({
   id: z.coerce.number().int().positive(),
 });
@@ -33,7 +38,7 @@ export const createCreatureSchema = z
   .object({
     name: trimmed(128),
     description: trimmed(4000),
-    coverLink: trimmed(256),
+    coverLink: coverFileName,
     typeId: z.number().int().positive(),
     locationIds: z.array(z.number().int().positive()).min(1).max(64),
   })

@@ -2,11 +2,40 @@ import type { Express } from "express";
 import request from "supertest";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
-const testDatabaseUrl = process.env.TEST_DATABASE_URL;
-if (testDatabaseUrl) process.env.DATABASE_URL = testDatabaseUrl;
-const hasDatabase = Boolean(testDatabaseUrl);
+function requireSafeTestDatabaseUrl(value: string | undefined): string {
+  if (!value) {
+    throw new Error(
+      "TEST_DATABASE_URL is required because integration tests replace database contents.",
+    );
+  }
 
-describe.skipIf(!hasDatabase)("MythBase API (integration)", () => {
+  let url: URL;
+  try {
+    url = new URL(value);
+  } catch {
+    throw new Error("TEST_DATABASE_URL must be a valid PostgreSQL URL.");
+  }
+
+  if (!new Set(["postgres:", "postgresql:"]).has(url.protocol)) {
+    throw new Error("TEST_DATABASE_URL must use postgres:// or postgresql://.");
+  }
+
+  const databaseName = decodeURIComponent(url.pathname.replace(/^\/+/, ""));
+  if (!/(^|[-_])test($|[-_])/i.test(databaseName)) {
+    throw new Error(
+      "TEST_DATABASE_URL must target a database whose name contains test.",
+    );
+  }
+
+  return value;
+}
+
+const testDatabaseUrl = requireSafeTestDatabaseUrl(
+  process.env.TEST_DATABASE_URL,
+);
+process.env.DATABASE_URL = testDatabaseUrl;
+
+describe("MythBase API (integration)", () => {
   let app: Express;
   let hollowFensId: number;
   let heroTypeId: number;
@@ -162,6 +191,19 @@ describe.skipIf(!hasDatabase)("MythBase API (integration)", () => {
         typeId: heroTypeId,
         locationIds: [hollowFensId],
         isAdmin: true,
+      });
+    expect(res.status).toBe(400);
+  });
+
+  it("rejects a cover path instead of a file name", async () => {
+    const res = await request(app)
+      .post("/creatures")
+      .send({
+        name: "Unsafe Cover",
+        description: "A creature with an invalid cover path.",
+        coverLink: "../private.svg",
+        typeId: heroTypeId,
+        locationIds: [hollowFensId],
       });
     expect(res.status).toBe(400);
   });

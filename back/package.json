@@ -1,10 +1,10 @@
 {
-  "name": "myth-base-server",
+  "name": "mythbase-api",
   "version": "1.0.0",
   "description": "MythBase API server",
   "main": "dist/index.js",
   "engines": {
-    "node": ">=20"
+    "node": ">=24 <25"
   },
   "scripts": {
     "build": "tsc",
@@ -12,6 +12,8 @@
     "dev": "nodemon",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "test:unit": "vitest run src/domain",
+    "test:integration": "vitest run src/http/api.test.ts",
     "test:watch": "vitest",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js -d src/db/data-source.ts",
     "migration:run": "npm run typeorm -- migration:run",
