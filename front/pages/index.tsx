@@ -109,8 +109,11 @@ export default function CatalogPage() {
     <div className="catalog">
       <aside className="panel sidebar">
         <div className="sidebar__section">
-          <div className="sidebar__title">Поиск</div>
+          <label className="sidebar__title" htmlFor="creature-search">
+            Поиск
+          </label>
           <input
+            id="creature-search"
             type="search"
             placeholder="Имя существа…"
             value={search}

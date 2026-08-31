@@ -10,6 +10,7 @@
   --accent: #7c9cff;
   --accent-contrast: #0f1115;
   --danger: #ff6b6b;
+  --header-bg: rgba(15, 17, 21, 0.82);
   --radius: 10px;
   --radius-sm: 6px;
   --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
@@ -30,6 +31,7 @@
     --accent: #3d5afe;
     --accent-contrast: #ffffff;
     --danger: #d1433b;
+    --header-bg: rgba(255, 255, 255, 0.88);
     --shadow: 0 8px 30px rgba(20, 25, 40, 0.12);
     color-scheme: light;
   }
@@ -73,7 +75,7 @@ h4 {
 /* ---------- Layout shell ---------- */
 .site-header {
   border-bottom: 1px solid var(--border);
-  background: rgba(15, 17, 21, 0.7);
+  background: var(--header-bg);
   backdrop-filter: blur(8px);
   position: sticky;
   top: 0;
@@ -156,6 +158,7 @@ h4 {
 }
 
 .sidebar__title {
+  display: block;
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -352,6 +355,23 @@ select:focus {
   color: #d3a6ff;
 }
 
+@media (prefers-color-scheme: light) {
+  .badge--hero {
+    border-color: #3856c8;
+    color: #2d46aa;
+  }
+
+  .badge--beast {
+    border-color: #238561;
+    color: #176747;
+  }
+
+  .badge--spirit {
+    border-color: #7a3fab;
+    color: #66308f;
+  }
+}
+
 /* ---------- State messages ---------- */
 .state {
   border: 1px dashed var(--border-strong);
@@ -458,9 +478,27 @@ select:focus {
 
 .tree__toggle {
   width: 1rem;
-  cursor: pointer;
+  min-width: 1rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  text-align: center;
   user-select: none;
   color: var(--text-faint);
+}
+
+button.tree__toggle {
+  cursor: pointer;
+}
+
+button.tree__toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.tree__toggle--spacer {
+  display: inline-block;
 }
 
 .form-error {

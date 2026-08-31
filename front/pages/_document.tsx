@@ -5,10 +5,6 @@ export default function Document() {
     <Html lang="ru">
       <Head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <meta
-          name="description"
-          content="MythBase — каталог вымышленных существ, героев и духов с фильтрами по типам и локациям."
-        />
       </Head>
       <body>
         <Main />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import Modal from "./Modal";
 import { ApiError, api } from "../lib/api";
 import type { MythLocation } from "../lib/types";
@@ -18,6 +18,7 @@ export default function CreateLocationModal({
   const [parentId, setParentId] = useState<number | "">("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const errorId = useId();
 
   const ordered = [...locations].sort((a, b) => a.name.localeCompare(b.name));
 
@@ -52,6 +53,7 @@ export default function CreateLocationModal({
           value={name}
           onChange={(event) => setName(event.target.value)}
           maxLength={128}
+          aria-describedby={error ? errorId : undefined}
         />
       </label>
 
@@ -59,6 +61,7 @@ export default function CreateLocationModal({
         <span className="field__label">Родительская локация</span>
         <select
           value={parentId}
+          aria-describedby={error ? errorId : undefined}
           onChange={(event) =>
             setParentId(event.target.value === "" ? "" : Number(event.target.value))
           }
@@ -72,7 +75,11 @@ export default function CreateLocationModal({
         </select>
       </label>
 
-      {error && <p className="form-error">{error}</p>}
+      {error && (
+        <p id={errorId} className="form-error" role="alert">
+          {error}
+        </p>
+      )}
 
       <div className="btn-row" style={{ marginTop: "1rem" }}>
         <button

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import Modal from "./Modal";
 import LocationTree from "./LocationTree";
 import { ApiError, api } from "../lib/api";
@@ -24,6 +24,7 @@ export default function CreateCreatureModal({
   const [locationIds, setLocationIds] = useState<number[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const errorId = useId();
 
   const toggleLocation = (id: number) => {
     setLocationIds((prev) =>
@@ -73,6 +74,7 @@ export default function CreateCreatureModal({
           value={name}
           onChange={(event) => setName(event.target.value)}
           maxLength={128}
+          aria-describedby={error ? errorId : undefined}
         />
       </label>
 
@@ -82,6 +84,7 @@ export default function CreateCreatureModal({
           value={description}
           onChange={(event) => setDescription(event.target.value)}
           maxLength={4000}
+          aria-describedby={error ? errorId : undefined}
         />
       </label>
 
@@ -92,6 +95,7 @@ export default function CreateCreatureModal({
           value={coverLink}
           onChange={(event) => setCoverLink(event.target.value)}
           maxLength={256}
+          aria-describedby={error ? errorId : undefined}
         />
       </label>
 
@@ -100,6 +104,7 @@ export default function CreateCreatureModal({
         <select
           value={typeId}
           onChange={(event) => setTypeId(Number(event.target.value))}
+          aria-describedby={error ? errorId : undefined}
         >
           <option value={0}>— выберите тип —</option>
           {types.map((type) => (
@@ -110,7 +115,7 @@ export default function CreateCreatureModal({
         </select>
       </label>
 
-      <div className="field">
+      <div className="field" aria-describedby={error ? errorId : undefined}>
         <span className="field__label">Локации</span>
         <LocationTree
           locations={locations}
@@ -119,7 +124,11 @@ export default function CreateCreatureModal({
         />
       </div>
 
-      {error && <p className="form-error">{error}</p>}
+      {error && (
+        <p id={errorId} className="form-error" role="alert">
+          {error}
+        </p>
+      )}
 
       <div className="btn-row" style={{ marginTop: "1rem" }}>
         <button

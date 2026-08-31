@@ -50,22 +50,17 @@ export default function LocationTree({
         <div key={location.id} style={{ marginLeft: depth * 14 }}>
           <div className="tree__row">
             {hasChildren ? (
-              <span
+              <button
+                type="button"
                 className="tree__toggle"
-                role="button"
-                tabIndex={0}
+                aria-expanded={!isCollapsed}
+                aria-label={`${isCollapsed ? "Развернуть" : "Свернуть"}: ${location.name}`}
                 onClick={() => toggleCollapse(location.id)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    toggleCollapse(location.id);
-                  }
-                }}
               >
                 {isCollapsed ? "▸" : "▾"}
-              </span>
+              </button>
             ) : (
-              <span className="tree__toggle" aria-hidden="true">
+              <span className="tree__toggle tree__toggle--spacer" aria-hidden="true">
                 ·
               </span>
             )}

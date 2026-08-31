@@ -12,7 +12,11 @@ export default function StateMessage({
   action,
 }: StateMessageProps) {
   return (
-    <div className={variant === "error" ? "state state--error" : "state"} role={variant === "error" ? "alert" : "status"}>
+    <div
+      className={variant === "error" ? "state state--error" : "state"}
+      role={variant === "error" ? "alert" : "status"}
+      aria-live={variant === "loading" ? "polite" : undefined}
+    >
       {variant === "loading" && <div className="spinner" aria-hidden="true" />}
       <div className="state__title">{title}</div>
       {description && <div>{description}</div>}
