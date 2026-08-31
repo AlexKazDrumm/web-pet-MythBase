@@ -1,0 +1,34 @@
+{
+  "name": "mythbase",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MythBase — каталог вымышленных существ, героев и духов",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexKazDrumm/web-pet-MythBase.git"
+  },
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "typecheck": "npm run typecheck --prefix back && npm run typecheck --prefix front",
+    "lint": "eslint . --max-warnings=0",
+    "test": "npm test --prefix back && npm test --prefix front",
+    "test:unit": "npm run test:unit --prefix back && npm test --prefix front",
+    "build": "npm run build --prefix back && npm run build --prefix front",
+    "e2e": "npm test --prefix e2e",
+    "e2e:install": "npm run install:browsers --prefix e2e",
+    "docker:up": "docker compose up -d --build",
+    "docker:seed": "docker compose run --build --rm seed",
+    "docker:down": "docker compose down",
+    "docker:reset": "docker compose down -v"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.9.1",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "globals": "17.11.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.68.0"
+  }
+}

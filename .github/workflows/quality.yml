@@ -1,0 +1,87 @@
+name: Quality
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: mythbase
+          POSTGRES_PASSWORD: mythbase-ci
+          POSTGRES_DB: mythbase_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U mythbase -d mythbase_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      TEST_DATABASE_URL: postgres://mythbase:mythbase-ci@localhost:5432/mythbase_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            back/package-lock.json
+            front/package-lock.json
+      - name: Install lint dependencies
+        run: npm ci
+      - name: Install backend dependencies
+        working-directory: back
+        run: npm ci
+      - name: Install frontend dependencies
+        working-directory: front
+        run: npm ci
+      - name: Check backend
+        working-directory: back
+        run: npm run typecheck && npm test && npm run build
+      - name: Check frontend
+        working-directory: front
+        run: npm run typecheck && npm test && npm run build
+      - name: Lint repository
+        run: npm run lint
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: e2e/package-lock.json
+      - name: Install browser test dependencies
+        working-directory: e2e
+        run: npm ci
+      - name: Install Chromium
+        working-directory: e2e
+        run: npm exec -- playwright install --with-deps chromium
+      - name: Start production stack
+        run: docker compose --env-file .env.example up --build -d
+      - name: Seed demo data
+        run: docker compose --env-file .env.example run --build --rm seed
+      - name: Wait for the web application
+        run: curl --fail --retry 30 --retry-delay 2 --retry-all-errors http://localhost:3000
+      - name: Run browser checks
+        working-directory: e2e
+        run: npm test
+      - if: always()
+        run: docker compose --env-file .env.example down -v
